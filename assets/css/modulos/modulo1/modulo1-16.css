@@ -25,11 +25,12 @@
 }
 
 .gifs-container {
-  z-index: 1;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: self-end;
+  align-items: center;
+
+  margin: 2.3% 0;
 }
 
 .grid-section {
@@ -40,14 +41,9 @@
 }
 
 .grid-section img {
-  width: 70%;
+  width: 100%;
 
   transition: rotate 0.5s, scale 0.5s;
-}
-
-.grid-section img:hover {
-  cursor: pointer;
-  scale: 0.98;
 }
 
 .grid-section img:active {
@@ -55,7 +51,79 @@
 }
 
 .grid-section h1 {
+  padding: 15px 0;
+  color: black;
+}
+
+.modal-wrapper {
+
+  position: relative;
+
+  width: 74%;
+  height: auto;
+  max-width: 70%;
+  
+  clip-path: circle(50%);
+
+}
+
+.modal-wrapper:hover {
+  cursor: pointer;
+}
+
+.modal-wrapper:hover .circular-nametag {
+  cursor: pointer;
+  height: 37%
+}
+
+.modal-wrapper img {
+
+  width: 100%;
+
+}
+
+.circular-nametag {
+
+  position: absolute;
+  bottom: 0%;
+
+  width: 100%;
+  height: 31.5%;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  align-items: center;
+  justify-content: center;
+
   color: white;
+  font-family: Arial, sans-serif;
+  font-size: clamp(10px, 4vw, 40px);
+  font-weight: bold;
+
+  transition: height 0.2s ease;
+  
+}
+
+@keyframes twitchingAnimation {
+  0%, 90% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  22.5% {
+    transform: scale(1.11) rotate(-4deg);
+  }
+
+  45% {
+    transform: scale(0.92) rotate(5deg);
+  }
+
+  70% {
+    transform: scale(1.08) rotate(-2deg);
+  }
+}
+
+.modal-wrapper.clicked {
+  animation: none;
 }
 
 .modal-alert {
@@ -73,8 +141,17 @@
     font-size: 30px !important;
   }
 
-  .gifs-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr !important;
+  .modal-wrapper {
+
+    position: relative;
+
+    width: 74%;
+    height: auto;
+    
+    clip-path: circle(50%);
+
+    animation: twitchingAnimation 1.8s ease-in-out infinite;
+
   }
+
 }

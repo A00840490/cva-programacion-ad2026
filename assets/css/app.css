@@ -11338,17 +11338,23 @@ a.modulo-siguiente:visited:hover {
 }
 
 .sticky-score {
-  position: sticky;
+  /* not sticky anymore */
+
+  position: relative;
+
+  border: none;
   bottom: 4%;
-  left: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+
 }
 
 @media (min-width: 100px) and (max-width: 575px) {
-  .sticky-score {
+/*   .sticky-score {
     position: sticky;
     bottom: 4%;
-    left: 100%;
-  }
+  } */ not relevant
   .wrapper-score {
     margin-top: 50px;
   }

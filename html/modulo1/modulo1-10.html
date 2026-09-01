@@ -262,29 +262,29 @@
                                                 style="display: none; color:green">
                                                 ¡Respuesta correcta!
                                             </p>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="radiobutton5"
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="radiobutton5"
                                                     class="option">
                                                 <label class="custom-control-label" for="U13_Q4_A1">Una computadora
                                                     potente</label>
                                             </div>
 
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input correct"
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input correct"
                                                     name="radiobutton5">
                                                 <label class="custom-control-label" for="U13_Q4_A2">Un servidor
                                                     web</label>
                                             </div>
 
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="radiobutton5"
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="radiobutton5"
                                                     class="option">
                                                 <label class="custom-control-label" for="U13_Q4_A3">Un buen
                                                     framework</label>
                                             </div>
 
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="radiobutton5"
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="radiobutton5"
                                                     class="option">
                                                 <label class="custom-control-label" for="U13_Q4_A4">Un celular</label>
                                             </div>
@@ -329,10 +329,10 @@
                                     <!-- Columna derecha de preguntas END -->
 
                                     <!-- DIV STICKY SCORECARD -->
-                                    <div class="card d-flex sticky-score p-3 mrg-vertical-30 mrg-horizon-25">
+                                    <div class="card d-flex sticky-score p-3 mrg-top-30">
                                         <div class="submitbutton">
                                             <button type="button" class="button" data-toggle="modal"
-                                                data-target="#modal-fs" onclick="checkAll()">
+                                                data-target="//#modal-fs" onclick="checkAll()">
                                                 Revisar
                                             </button>
                                         </div>
@@ -561,6 +561,7 @@
                         $(this).addClass("incorrect");
                     }
                 });
+
                 $(".score > span").html("Resultado: " + parseInt(correct * 100 / count) + "/100");
                 if (parseInt(correct * 100 / count) >= passingGrade) {
                     $(".msg > span").html("¡Excelente!");

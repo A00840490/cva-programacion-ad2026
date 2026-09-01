@@ -64,9 +64,9 @@
                                             <div class="col-md-8 ml-auto">
                                                 <div class="card-block">
                                                     <h1 class="mrg-btm-20 card-title"><span class="badge badge-light">Tema 8</span> Atajos</h1>
-                                                    <p>Escribir código implica usar el teclado y ratón de manera continua. Para eficientizar esto, existen ciertas combinaciones de teclas que se denominan <b>atajos</b> que realizan funciones específicas que de otra manera tardarían más tiempo en realizarse.</p>
-                                                    <p>En Windows, la mayoría de estos se utlizan con la tecla <b>Ctrl</b> junto con una o más teclas dependiendo de lo que se quiera hacer. En Mac se utiliza la tecla <b>Command</b> en lugar de <b>Ctrl</b>.</p>
-                                                    <p>Tal vez ya conozcas algunos atajos. Entre los más utlizados están <img src="../../assets/images/course/modulo1/m1-7/ctrl.png" alt="ctrl"> + C  y  <img src="../../assets/images/course/modulo1/m1-7/ctrl.png" alt="ctrl"> + V para copiar y pegar. A continuación te mostraremos otros atajos útiles para escribir código, algunos de ellos son exclusivos de VS Code.</p>
+                                                    <p>Escribir código implica usar el teclado y ratón de manera continua. Para eficientizar esto, existen ciertas combinaciones de teclas que se denominan <b>atajos</b>, que realizan funciones específicas que de otra manera tardarían más tiempo en realizarse.</p>
+                                                    <p>En Windows, la mayoría de estos se utilizan con la tecla <b>Ctrl</b> junto con una o más teclas, dependiendo de lo que se quiera hacer. En Mac se utiliza la tecla <b>Command</b> en lugar de <b>Ctrl</b>.</p>
+                                                    <p>Tal vez ya conozcas algunos atajos. Entre los más utilizados están <img src="../../assets/images/course/modulo1/m1-7/ctrl.png" alt="ctrl"> + C  y  <img src="../../assets/images/course/modulo1/m1-7/ctrl.png" alt="ctrl"> + V para copiar y pegar. A continuación, te mostraremos otros atajos útiles para escribir código; algunos de ellos son exclusivos de VS Code.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                               </div>
                                               <h2 class="card-title">Atajos de Edición</h2>
                                               <div class="d-flex flex-row">
-                                                  <div class="p-2" id="button1" style="display: none;">
+                                                  <div class="p-2" id="button1">
                                                       <button onclick="myFunction2()" style="border: none; background:none; width: 50px;">
                                                           <img src="../../assets/images/course/modulo1/m1-9/add.png">
                                                       </button>
@@ -128,7 +128,7 @@
                                         <div class="col">
                                             <h2 class="card-title">Atajos de Selección</h2>
                                             <div class="d-flex flex-row">
-                                                <div class="p-2" id="button2" style="display: none;">
+                                                <div class="p-2" id="button2">
                                                     <button onclick="myFunction3()" style="border: none; background:none; width: 50px;">
                                                         <img src="../../assets/images/course/modulo1/m1-9/add.png">
                                                     </button>
@@ -146,7 +146,7 @@
                                             </div>
                                             <h2 class="card-title">Atajos del Editor</h2>
                                             <div class="d-flex flex-row">
-                                                <div class="p-2" id="button3" style="display: none;">
+                                                <div class="p-2" id="button3">
                                                     <button onclick="myFunction4()" style="border: none; background:none; width: 50px;">
                                                         <img src="../../assets/images/course/modulo1/m1-9/add.png">
                                                     </button>
@@ -248,34 +248,34 @@
       <script>
         function myFunction() {
           var x = document.getElementById("myDIV");
-          var y = document.getElementById("button1");
           if (x.style.display === "none") {
             x.style.display = "block";
-            y.style.display = "block";
+          } else {
+            x.style.display = "none";
           }
         }
         function myFunction2() {
           var x = document.getElementById("myDIV2");
-          var y = document.getElementById("button2");
           if (x.style.display === "none") {
             x.style.display = "block";
-            y.style.display = "block";
+          } else {
+            x.style.display = "none";
           }
         }
         function myFunction3() {
           var x = document.getElementById("myDIV3");
-          var y = document.getElementById("button3");
           if (x.style.display === "none") {
             x.style.display = "block";
-            y.style.display = "block";
+          } else {
+            x.style.display = "none";
           }
         }
         function myFunction4() {
             var x = document.getElementById("myDIV4");
-            var y = document.getElementById("button4");
             if (x.style.display === "none") {
               x.style.display = "block";
-              y.style.display = "block";
+            } else {
+              x.style.display = "none";
             }
           }
       </script>

@@ -86,7 +86,7 @@
                                     <div class="col">
                                         <h2 class="card-title">Frontend y Backend: ¿Qué Significan?</h2>
                                         <p>La programación web se divide en dos sectores principales: El <b>Frontend</b> y el <b>Backend</b> que, como sus traducciones al inglés nos indican, son las partes de "enfrente" y "detrás" de un sitio web, respectivamente. </p>
-                                        <p>El <b>Frontend</b> es todo lo que podemos visualizar en las páginas del sitio y las interacciones que se realizan desde la computadora del usuario. Incluye todo el codigo HTML, CSS e incluso JavaScript que puedan tener las páginas. Esto abarca texto, imágenes, animaciones, listas, interfaces, formularios y muchas otras cosas más con las que interactúan los diferentes usuarios.</p>
+                                        <p>El <b>Frontend</b> es todo lo que podemos visualizar en las páginas del sitio y las interacciones que se realizan desde la computadora del usuario. Incluye todo el código HTML, CSS e incluso JavaScript que puedan tener las páginas. Esto abarca texto, imágenes, animaciones, listas, interfaces, formularios y muchas otras cosas más con las que interactúan los diferentes usuarios.</p>
                                         <p>El <b>Backend</b> es todo lo que está por parte del servidor o servidores en los que se encuentra el sitio web. Entre muchas otras tareas, el back-end se encarga de manejar la información de los usuarios, trabajar con bases de datos y transmitir el contenido.</p>
                                         <p>Con estos dos componentes, podemos crear sitios web funcionales; todo nuestro código y archivos estarán en algún servidor que servirá como <b>Backend</b> y hará llegar estos archivos a nuestros usuarios para así desplegar nuestra página web al mundo. Este curso se enfocará principalmente en el <b>Frontend</b>.</p>
                                     </div>
@@ -121,9 +121,20 @@
                                       <div class="gifs-container">
                                         <!-- MODAL 1 -->
                                         <div class="grid-section">
-                                          <img src="../../assets/images/course/modulo1/m1-2/html.png" data-toggle="modal"
-                                            data-target="#info1" style="width: 66%; height: auto;">
-                                          <h1 class="titulo">Datos Generales</h1>
+
+                                          <div
+                                            class="modal-wrapper"
+                                            data-toggle="modal"
+                                            data-target="#info1"
+                                          >
+
+                                            <img src="../../assets/images/course/modulo1/m1-2/html.png" title="¿Qué es HTML?">
+
+                                            <div class="circular-nametag">
+                                              HTML
+                                            </div>
+
+                                          </div>
                           
                                           <div class="modal fade" id="info1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                                             aria-hidden="true">
@@ -152,9 +163,20 @@
                           
                                         <!-- MODAL 2 -->
                                         <div class="grid-section">
-                                          <img src="../../assets/images/course/modulo1/m1-2/css.png" data-toggle="modal"
-                                            data-target="#info2" style="width: 68%; height: auto;">
-                                          <h1 class="titulo">Dirección de localización</h1>
+
+                                          <div
+                                            class="modal-wrapper"
+                                            data-toggle="modal"
+                                            data-target="#info2"
+                                          >
+
+                                            <img src="../../assets/images/course/modulo1/m1-2/css.png" title="¿Qué es CSS?">
+
+                                            <div class="circular-nametag">
+                                              CSS
+                                            </div>
+
+                                          </div>
                           
                                           <div class="modal fade" id="info2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                                             aria-hidden="true">
@@ -172,7 +194,7 @@
                                                   <div class="row">
                                                     <div class="col-12 ">
                                                       <p>
-                                                        CSS quiere decir Cascading Style Sheets, u "Hojas de Estilo en Cascada" en español. CSS es un lenguaje que se usa principalmente para el diseño, ya que permite descrbir y agregar diferentes características a los elementos HTML. Puede ser utilizado para añadir diferentes estilos de fuentes al texto de una página web, cambiar el color de los elementos, e incluso se puede usar para animar los elementos. También puede modificar otros atributos de los elementos como espaciados, tamaños, márgenes y transparencia, entre muchos otros.
+                                                        CSS quiere decir Cascading Style Sheets, u "Hojas de Estilo en Cascada" en español. CSS es un lenguaje que se usa principalmente para el diseño, ya que permite describir y agregar diferentes características a los elementos HTML. Puede ser utilizado para añadir diferentes estilos de fuentes al texto de una página web, cambiar el color de los elementos, e incluso se puede usar para animar los elementos. También puede modificar otros atributos de los elementos como espaciados, tamaños, márgenes y transparencia, entre muchos otros.
                                                       </p>
                                                     </div>
                                                   </div>
@@ -184,10 +206,22 @@
                           
                                         <!-- MODAL 3 -->
                                         <div class="grid-section">
-                                          <img src="../../assets/images/course/modulo1/m1-2/js.png" data-toggle="modal"
-                                            data-target="#info3" style="width: 66%; height: auto;">
-                                          <h1 class="titulo">Comprobación de Estudios</h1>
-                          
+
+
+                                          <div
+                                            class="modal-wrapper"
+                                            data-toggle="modal"
+                                            data-target="#info3"
+                                          >
+
+                                            <img src="../../assets/images/course/modulo1/m1-2/js.png" title="¿Qué es JavaScript?">
+
+                                            <div class="circular-nametag" style="font-size: clamp(3px, 3vw, 35px); padding-bottom: 9.9%; padding-top: 1%;">
+                                              JavaScript
+                                            </div>
+
+                                          </div>
+
                                           <div class="modal fade" id="info3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                                             aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -312,6 +346,17 @@
     $input.setAttribute('id', `accordion_${dropdownID}`);
     $label.setAttribute('for', `accordion_${dropdownID}`);
   };
+
+  // function for first time clicked
+
+  const modalList = document.querySelectorAll(".modal-wrapper");
+
+  modalList.forEach(modal => {
+    modal.addEventListener("click", () => {
+      modal.classList.add("clicked");
+    });
+  });
+  
 </script>
 <!-- endbuild -->
 

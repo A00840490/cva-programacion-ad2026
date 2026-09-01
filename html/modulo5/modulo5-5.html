@@ -75,7 +75,7 @@
                                             <div class="col-md-6">
                                                 <div class="mrg-horizon-20">
                                                 <h1 class="mrg-top-20 card-title"><span class="badge badge-light">Tema
-                                                        4</span>Frameworks</h1>
+                                                        4</span> Frameworks</h1>
                                                 <p>Ya que hayas contratado tu dominio y un buen plan de alojamiento,
                                                     tienes todo listo para publicar tu sitio web. El servicio de hosting
                                                     también puede variar dependiendo si elegiste utilizar algún
@@ -119,9 +119,17 @@
                                         <div class="gifs-container">
                                           <!-- MODAL 1 -->
                                           <div class="grid-section">
-                                            <img src="../../assets/images/course/modulo5/m5-4/bootstrap.png" data-toggle="modal"
-                                              data-target="#info1" style="width: 63%; height: auto;">
-                                            <h1 class="titulo">Datos Generales</h1>
+
+                                            <div
+                                              class="modal-wrapper"
+                                              style=" animation: twitchingAnimation 1.8s ease-in-out infinite; "
+                                              data-toggle="modal"
+                                              data-target="#info1"
+                                            >
+
+                                              <img src="../../assets/images/course/modulo5/m5-4/bootstrap.png">
+
+                                            </div>
                             
                                             <div class="modal fade" id="info1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                                               aria-hidden="true">
@@ -138,7 +146,7 @@
                                                   <div class="modal-body">
                                                     <div class="row">
                                                       <div class="col-12 ">                                                    
-                                                        <p>Bootstrap es uno de los frameworks más utlizados de Internet. Se
+                                                        <p>Bootstrap es uno de los frameworks más utilizados de Internet. Se
                                                             puede utilizar para páginas pequeñas y hasta para páginas
                                                             empresariales más grandes. Nos brinda cientos de
                                                             funcionalidades que nos ahorran mucho tiempo de codificar,
@@ -158,9 +166,17 @@
                             
                                           <!-- MODAL 2 -->
                                           <div class="grid-section">
-                                            <img src="../../assets/images/course/modulo5/m5-4/jquery.gif" data-toggle="modal"
-                                              data-target="#info2" style="width: 66%; height: auto;">
-                                            <h1 class="titulo">Dirección de localización</h1>
+
+                                            <div
+                                              class="modal-wrapper"
+                                              style=" clip-path: none; animation: twitchingAnimation 1.8s ease-in-out infinite; "
+                                              data-toggle="modal"
+                                              data-target="#info2"
+                                            >
+
+                                              <img src="../../assets/images/course/modulo5/m5-4/jquery.gif">
+
+                                            </div>
                             
                                             <div class="modal fade" id="info2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                                               aria-hidden="true">
@@ -199,9 +215,17 @@
                             
                                           <!-- MODAL 3 -->
                                           <div class="grid-section">
-                                            <img src="../../assets/images/course/modulo5/m5-4/react.png" data-toggle="modal"
-                                              data-target="#info3" style="width: 63%; height: auto;">
-                                            <h1 class="titulo">Comprobación de Estudios</h1>
+
+                                            <div
+                                              class="modal-wrapper"
+                                              style=" animation: twitchingAnimation 1.8s ease-in-out infinite; "
+                                              data-toggle="modal"
+                                              data-target="#info3"
+                                            >
+
+                                              <img src="../../assets/images/course/modulo5/m5-4/react.png">
+
+                                            </div>
                             
                                             <div class="modal fade" id="info3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                                               aria-hidden="true">
@@ -313,6 +337,20 @@
     <script src="../../assets/js/app.js"></script>
     <script src="../../assets/js/recycled/navigationbar.js"></script>
     <script src="../../assets/js/progress/url-script.js"></script>
+
+    <script>
+
+      // function for first time clicked
+
+      const modalList = document.querySelectorAll(".modal-wrapper");
+
+      modalList.forEach(modal => {
+        modal.addEventListener("click", () => {
+          modal.classList.add("clicked");
+        });
+      });
+
+    </script>
 
     <!-- endbuild -->
     <!-- Insert your dependencies here -->
