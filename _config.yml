@@ -1,3 +1,2 @@
 exclude:
-  - assets/vendors/**/docs/
-  - assets/vendors/**/*.md
+  - assets/vendors
