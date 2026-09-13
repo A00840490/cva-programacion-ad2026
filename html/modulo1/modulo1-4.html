@@ -112,6 +112,21 @@
         }
     </style>
 
+    <style>
+
+        .carouselWrapper {
+
+            width: 100%;
+            height: auto;
+
+            background-color: #00b0bd;
+
+        }
+
+
+
+    </style>
+
 </head>
 
 <body class="header-info side-nav-dark text-justify">
@@ -249,7 +264,7 @@
 
                             <div class="row text-center py-5">
                                 <div class="slider" style="width: 80%; margin:auto">
-                                    <div class="mrg-horizon-50">
+                                    <div class="mrg-horizon-50 carouselWrapper">
                                         <p class="tutorial-text">¡Comencemos! Al abrirlo por primera vez, verás
                                             algo así:</p>
                                         <img
@@ -448,14 +463,13 @@
             
             $(".slider").slick({
                 centerMode: true,
-                centerPadding: '0px',
+                centerPadding: '80px',
                 infinite: false,
                 dots: true,
                 arrows: true,
                 slidesToShow: 1,
-                adaptiveHeight: true
+                adaptiveHeight: false
              
-,
             });
         });
     </script>

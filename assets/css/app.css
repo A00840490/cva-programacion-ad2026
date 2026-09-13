@@ -7416,6 +7416,8 @@ button:disabled {
   -moz-transform: translateX(0%) translateY(0%);
   -o-transform: translateX(0%) translateY(0%);
   -ms-transform: translateX(0%) translateY(0%);
+
+  max-width: 480px;
 }
 
 .modal.fade.slide-in-right .modal-dialog {
