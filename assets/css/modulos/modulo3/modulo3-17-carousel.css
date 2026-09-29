@@ -79,47 +79,53 @@
     rotateZ(180deg);
 }
 .text-carousel__cb1 {
-  transform: rotateZ(60deg) rotateX(90deg) translateY(120px) translateZ(279px);
+  transform: rotateZ(60deg) rotateX(90deg) translateY(120px) translateZ(279px)
+    rotateX(180deg);
 }
 .text-carousel__c2 {
   transform: rotateZ(120deg) rotateX(90deg) translateY(120px) translateZ(280px)
     rotateZ(180deg);
 }
 .text-carousel__cb2 {
-  transform: rotateZ(120deg) rotateX(90deg) translateY(120px) translateZ(279px);
+  transform: rotateZ(120deg) rotateX(90deg) translateY(120px) translateZ(279px)
+    rotateX(180deg);
 }
 .text-carousel__c3 {
   transform: rotateZ(180deg) rotateX(90deg) translateY(120px) translateZ(280px)
     rotateZ(180deg);
 }
 .text-carousel__cb3 {
-  transform: rotateZ(180deg) rotateX(90deg) translateY(120px) translateZ(279px);
+  transform: rotateZ(180deg) rotateX(90deg) translateY(120px) translateZ(279px)
+    rotateX(180deg);
 }
 .text-carousel__c4 {
   transform: rotateZ(240deg) rotateX(90deg) translateY(120px) translateZ(280px)
     rotateZ(180deg);
 }
 .text-carousel__cb4 {
-  transform: rotateZ(240deg) rotateX(90deg) translateY(120px) translateZ(279px);
+  transform: rotateZ(240deg) rotateX(90deg) translateY(120px) translateZ(279px)
+    rotateX(180deg);
 }
 .text-carousel__c5 {
   transform: rotateZ(300deg) rotateX(90deg) translateY(120px) translateZ(280px)
     rotateZ(180deg);
 }
 .text-carousel__cb5 {
-  transform: rotateZ(300deg) rotateX(90deg) translateY(120px) translateZ(279px);
+  transform: rotateZ(300deg) rotateX(90deg) translateY(120px) translateZ(279px)
+    rotateX(180deg);
 }
 .text-carousel__c6 {
   transform: rotateZ(360deg) rotateX(90deg) translateY(120px) translateZ(280px)
     rotateZ(180deg);
 }
 .text-carousel__cb6 {
-  transform: rotateZ(360deg) rotateX(90deg) translateY(120px) translateZ(279px);
+  transform: rotateZ(360deg) rotateX(90deg) translateY(120px) translateZ(279px)
+    rotateX(180deg);
 }
 
 @keyframes text-carousel-rotate {
   to {
-    transform: perspective(1000px) rotateX(68deg) rotateZ(360deg);
+    transform: perspective(1000px) rotateX(72deg) rotateZ(360deg);
   }
 }
 
@@ -147,4 +153,47 @@
   .text-carousel {
     animation: none;
   }
+}
+
+.text-carousel__back {
+  background-color: #171b24;
+  border: 1px solid #2a3140;
+  overflow: hidden;
+  place-items: start;
+}
+
+.text-carousel__code {
+  margin: 0;
+  padding: 14px 12px;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: #c9d1d9;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9.5px;
+  line-height: 1.4;
+  text-align: left;
+  white-space: pre;
+}
+
+.text-carousel__code span {
+  display: inline;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.tc-sel {
+  color: #7fd4ff;
+}
+.tc-prop {
+  color: #ff9e64;
+}
+.tc-tag {
+  color: #f7768e;
+}
+.tc-attr {
+  color: #e0af68;
+}
+.tc-str {
+  color: #9ece6a;
 }

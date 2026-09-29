@@ -1,0 +1,368 @@
+/* modulo3-22: propiedades flex como tarjetas 3D que se voltean.
+   Frente: nombre + mini demostración animada de la propiedad.
+   Reverso: explicación. Se voltean con hover o al enfocarlas (tocar). */
+
+.flex-props {
+  --fp-container: #3f6fd8;
+  --fp-container-2: #6a8ff0;
+  --fp-item: #f27935;
+  --fp-item-2: #f7a35c;
+  --fp-ink: #172033;
+  --fp-muted: #56627a;
+  max-width: 980px;
+  margin: 1rem auto 2.5rem;
+}
+
+.flex-props .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.flex-props__tip {
+  margin: 0 0 6px;
+  color: var(--fp-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.flex-props__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  box-shadow: 0 18px 40px rgba(31, 47, 71, 0.12);
+}
+
+.flex-props__table td {
+  padding: 0;
+  border: 1px solid #ffffff;
+  vertical-align: top;
+}
+
+/* ---------- Encabezados: bloques extruidos ---------- */
+.flex-props__head {
+  --c: var(--fp-container);
+  padding: 16px 18px;
+  border: 1px solid #ffffff;
+  background: var(--c);
+  color: #ffffff;
+  font: 800 18px/1.2 Arial, sans-serif;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+
+.flex-props__head--item {
+  --c: var(--fp-item);
+}
+
+
+/* ---------- Tarjeta que se voltea ---------- */
+.fp-card {
+  --c1: var(--fp-container);
+  --c2: var(--fp-container-2);
+  height: 200px;
+  perspective: 900px;
+  outline: none;
+  cursor: pointer;
+  animation: fp-in 0.8s cubic-bezier(0.2, 0.8, 0.3, 1.15) both;
+  animation-delay: calc(0.15s + var(--d) * 0.07s);
+}
+
+.fp-card--item {
+  --c1: var(--fp-item);
+  --c2: var(--fp-item-2);
+}
+
+@keyframes fp-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) rotateX(-70deg);
+  }
+}
+
+.fp-card__inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.3, 0.9, 0.3, 1.1);
+}
+
+.fp-card:hover .fp-card__inner,
+.fp-card:focus .fp-card__inner,
+.fp-card:focus-within .fp-card__inner {
+  transform: rotateY(180deg);
+}
+
+.fp-card:focus-visible .fp-card__face {
+  outline: 3px solid var(--c1);
+  outline-offset: 3px;
+}
+
+.fp-card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.fp-card__front {
+  background: color-mix(in srgb, var(--c1) 16%, #ffffff);
+  color: color-mix(in srgb, var(--c1) 85%, #000);
+}
+
+.fp-card__back {
+  justify-content: center;
+  background: color-mix(in srgb, var(--c1) 8%, #ffffff);
+  transform: rotateY(180deg);
+}
+
+.fp-card__name {
+  font: 700 17px/1.2 "Courier New", monospace;
+}
+
+.fp-card__back .fp-card__name {
+  margin-bottom: 8px;
+  color: color-mix(in srgb, var(--c1) 85%, #000);
+}
+
+.fp-card__back p {
+  margin: 0;
+  color: var(--fp-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ---------- Mini demostraciones ---------- */
+.fp-demo {
+  --t: 6s;
+  display: flex;
+  gap: 5px;
+  flex: 1;
+  width: 100%;
+  margin-top: 12px;
+  padding: 7px;
+  border: 1.5px dashed color-mix(in srgb, var(--c1) 45%, transparent);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  overflow: hidden;
+}
+
+.fp-demo i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--c1);
+  color: #ffffff;
+  font: 800 12px/1 Arial, sans-serif;
+  font-style: normal;
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--c1) 70%, #000);
+}
+
+/* elemento destacado en las demos de elementos flex */
+.fp-demo--align-self i:nth-child(2),
+.fp-demo--grow i:nth-child(2),
+.fp-demo--shrink i:nth-child(2),
+.fp-demo--order i:nth-child(1) {
+  background: #172033;
+  color: #ffffff;
+}
+
+/* flex-direction: row ↔ column */
+.fp-demo--direction {
+  animation: fp-direction var(--t) infinite;
+}
+@keyframes fp-direction {
+  0%, 45% { flex-direction: row; }
+  50%, 95% { flex-direction: column; }
+}
+
+/* flex-wrap: el contenedor se angosta y los elementos pasan de línea */
+.fp-demo--wrap {
+  flex-wrap: wrap;
+  align-content: flex-start;
+  animation: fp-wrap var(--t) ease-in-out infinite;
+}
+@keyframes fp-wrap {
+  0%, 15%, 100% { width: 100%; }
+  45%, 70% { width: 78px; }
+}
+@keyframes fp-narrow {
+  0%, 15%, 100% { width: 100%; }
+  45%, 70% { width: 50%; }
+}
+
+/* align-items */
+.fp-demo--align-items i:nth-child(1) { height: 18px; }
+.fp-demo--align-items i:nth-child(3) { height: 38px; }
+.fp-demo--align-items {
+  animation: fp-align-items var(--t) infinite;
+}
+@keyframes fp-align-items {
+  0%, 30% { align-items: flex-start; }
+  33%, 63% { align-items: center; }
+  66%, 97% { align-items: flex-end; }
+}
+
+/* justify-content */
+.fp-demo--justify {
+  align-items: center;
+  animation: fp-justify var(--t) infinite;
+}
+@keyframes fp-justify {
+  0%, 22% { justify-content: flex-start; }
+  25%, 47% { justify-content: center; }
+  50%, 72% { justify-content: flex-end; }
+  75%, 97% { justify-content: space-between; }
+}
+
+/* align-content: varias líneas que se mueven juntas */
+.fp-demo--align-content {
+  flex-wrap: wrap;
+  animation: fp-align-content var(--t) infinite;
+}
+.fp-demo--align-content i {
+  width: calc(33.33% - 4px);
+  height: 20px;
+}
+@keyframes fp-align-content {
+  0%, 30% { align-content: flex-start; }
+  33%, 63% { align-content: center; }
+  66%, 97% { align-content: flex-end; }
+}
+
+/* align-self: solo el elemento 2 se mueve */
+.fp-demo--align-self {
+  align-items: center;
+  justify-content: center;
+}
+.fp-demo--align-self i:nth-child(2) {
+  animation: fp-align-self var(--t) infinite;
+}
+@keyframes fp-align-self {
+  0%, 30% { align-self: center; }
+  33%, 63% { align-self: flex-start; }
+  66%, 97% { align-self: flex-end; }
+}
+
+/* flex-grow: el elemento 2 crece */
+.fp-demo--grow {
+  align-items: center;
+}
+.fp-demo--grow i:nth-child(2) {
+  animation: fp-grow var(--t) ease-in-out infinite;
+}
+@keyframes fp-grow {
+  0%, 15%, 100% { flex-grow: 0; }
+  45%, 75% { flex-grow: 1; }
+}
+
+/* flex-shrink: al angostarse, el elemento 2 cede más espacio */
+.fp-demo--shrink {
+  align-items: center;
+  animation: fp-narrow var(--t) ease-in-out infinite;
+}
+.fp-demo--shrink i {
+  flex: 0 1 40%;
+  width: auto;
+  min-width: 0;
+}
+.fp-demo--shrink i:nth-child(2) {
+  flex-shrink: 8;
+}
+
+/* flex: proporciones 1 : 2 : 1 que se mantienen al cambiar el tamaño */
+.fp-demo--flex {
+  align-items: center;
+  animation: fp-narrow var(--t) ease-in-out infinite;
+}
+.fp-demo--flex i {
+  flex: 1;
+  width: auto;
+}
+.fp-demo--flex i:nth-child(2) {
+  flex: 2;
+  background: #172033;
+  color: #ffffff;
+}
+
+/* order: el elemento 1 se mueve al final y regresa */
+.fp-demo--order {
+  align-items: center;
+  justify-content: center;
+}
+.fp-demo--order i:nth-child(1) {
+  animation: fp-order var(--t) infinite;
+}
+@keyframes fp-order {
+  0%, 30% { order: 0; }
+  33%, 63% { order: 2; }
+  66%, 97% { order: 5; }
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 767px) {
+  .flex-props__head {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+
+  .fp-card {
+    height: 190px;
+  }
+
+  .fp-card__face {
+    padding: 12px;
+  }
+
+  .fp-card__name {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  .fp-card__back p {
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .fp-demo {
+    gap: 3px;
+    padding: 5px;
+  }
+
+  .fp-demo i {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  .fp-demo--align-items i:nth-child(1) { height: 14px; }
+  .fp-demo--align-items i:nth-child(3) { height: 30px; }
+  .fp-demo--align-content i { width: calc(33.33% - 2px); height: 16px; }
+
+  @keyframes fp-wrap {
+    0%, 15%, 100% { width: 100%; }
+    45%, 70% { width: 52px; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-card,
+  .fp-demo,
+  .fp-demo i {
+    animation: none !important;
+  }
+
+  .fp-card__inner {
+    transition: none;
+  }
+}
