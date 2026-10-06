@@ -268,11 +268,6 @@
     frame: root.querySelector("[data-frame]"),
     empty: root.querySelector("[data-empty]"),
     question: root.querySelector("[data-question]"),
-    result: root.querySelector("[data-result]"),
-    resultScore: root.querySelector("[data-result-score]"),
-    resultMsg: root.querySelector("[data-result-msg]"),
-    resultList: root.querySelector("[data-result-list]"),
-    restart: root.querySelector("[data-restart]"),
   };
 
   var state;
@@ -283,10 +278,8 @@
       answers: [], // valor final (correcto) de cada pregunta
       correct: [], // true/false por pregunta
       waiting: false, // mostrando corrección, esperando "Continuar"
+      done: false, // todas las preguntas respondidas
     };
-    els.result.hidden = true;
-    els.question.hidden = false;
-    els.actions.hidden = false;
     render();
   }
 
@@ -441,59 +434,76 @@
     var total = QUESTIONS.length;
     els.bar.style.width = (state.current / total) * 100 + "%";
     var q = QUESTIONS[state.current];
-    els.ask.textContent = q ? q.data.ask : "";
+    els.ask.textContent = state.done ? "¡Completaste la página!" : q ? q.data.ask : "";
+    // Al terminar, el botón de Revisar se vuelve "Intentar de nuevo".
+    els.check.textContent = state.done ? "Intentar de nuevo" : "Revisar";
     els.check.hidden = state.waiting;
     els.next.hidden = !state.waiting;
-    if (!state.waiting) {
+    if (!state.waiting && !state.done) {
       els.feedback.className = "builder__feedback";
       els.feedback.innerHTML = "";
     }
   }
 
   function render() {
-    if (state.current >= QUESTIONS.length) return finish();
     renderHeader();
     renderCode();
     renderPreview();
   }
 
+  // Recuadro vacío: sacudida de lado a lado (como al fallar una contraseña en macOS).
+  function shake(input) {
+    if (!input) return;
+    input.classList.remove("is-shaking");
+    void input.offsetWidth; // reinicia la animación si se presiona varias veces
+    input.classList.add("is-shaking");
+    // Se quita al terminar la animación o al escribir (sin animación, por
+    // "reducir movimiento", animationend no llega).
+    ["animationend", "input"].forEach(function (type) {
+      input.addEventListener(
+        type,
+        function () {
+          input.classList.remove("is-shaking");
+        },
+        { once: true }
+      );
+    });
+    input.focus();
+  }
+
   function check() {
-    if (state.waiting) return;
+    if (state.waiting || state.done) return;
     var input = els.code.querySelector("[data-input]");
     var q = QUESTIONS[state.current];
     var given = input ? input.value : "";
     if (!norm(given)) {
-      els.feedback.className = "builder__feedback is-hint";
-      els.feedback.textContent = "Escribe tu respuesta en el recuadro del código.";
-      if (input) input.focus();
+      shake(input);
       return;
     }
     var ok = norm(given, q.data.exact) === norm(q.data.a, q.data.exact);
     state.correct[state.current] = ok;
     state.answers[state.current] = q.data.a;
 
-    if (ok) {
-      els.feedback.className = "builder__feedback is-right";
-      els.feedback.innerHTML = "<strong>¡Correcto!</strong> " + esc(q.data.why);
+    var isLast = state.current === QUESTIONS.length - 1;
+    var fb = ok
+      ? "<strong>¡Correcto!</strong> " + esc(q.data.why)
+      : "<strong>No es correcto.</strong> Escribiste <code>" + esc(given.trim()) +
+        "</code>; la respuesta es <code>" + esc(q.data.a) + "</code>. " + esc(q.data.why);
+
+    if (ok || isLast) {
+      // Correcta: avanza y deja leer el mensaje. Última pregunta (bien o mal):
+      // no hace falta "Continuar", se va directo al resultado.
       state.current++;
-      // Muestra el avance y deja leer el mensaje antes de la siguiente pregunta.
-      var fb = els.feedback.innerHTML;
+      state.done = state.current >= QUESTIONS.length;
       render();
-      if (state.current < QUESTIONS.length) {
-        els.feedback.className = "builder__feedback is-right";
-        els.feedback.innerHTML = fb;
-      }
     } else {
       state.waiting = true;
-      els.feedback.className = "builder__feedback is-wrong";
-      els.feedback.innerHTML =
-        "<strong>No es correcto.</strong> Escribiste <code>" + esc(given.trim()) +
-        "</code>; la respuesta es <code>" + esc(q.data.a) + "</code>. " + esc(q.data.why);
-      renderHeader();
-      renderCode();
-      renderPreview();
-      els.next.focus();
+      render();
     }
+    els.feedback.className = "builder__feedback " + (ok ? "is-right" : "is-wrong");
+    els.feedback.innerHTML = fb;
+    if (state.done) finish();
+    else if (state.waiting) els.next.focus();
   }
 
   function next() {
@@ -502,49 +512,32 @@
     render();
   }
 
+  // Al terminar: ventana con los aciertos y si conviene volver a intentarlo.
   function finish() {
     var total = QUESTIONS.length;
     var hits = state.correct.filter(Boolean).length;
-    els.bar.style.width = "100%";
-    els.question.hidden = true;
-    els.actions.hidden = true;
-    renderCode();
-    renderPreview();
+    var passed = hits * 100 >= total * 80;
+    els.check.focus({ preventScroll: true });
 
-    els.resultScore.textContent = hits + " de " + total;
-    var score = Math.round((hits * 100) / total);
-    els.resultMsg.textContent =
-      score >= 80
-        ? "¡Excelente! Armaste la página casi sin errores."
-        : "Repasa los temas de las respuestas que fallaste y vuelve a intentarlo.";
-    var missed = QUESTIONS.filter(function (_, i) {
-      return !state.correct[i];
-    });
-    els.resultList.innerHTML = missed.length
-      ? "<p>Respuestas que fallaste:</p><ul>" +
-        missed
-          .map(function (q) {
-            return "<li><code>" + esc(q.data.a) + "</code> — " + esc(q.data.why) + "</li>";
-          })
-          .join("") +
-        "</ul>"
-      : "";
-    els.result.hidden = false;
-
-    // Ventana de resultado que ya tenía la página.
     var modal = document.getElementById("modal-fs");
-    if (modal && window.jQuery) {
-      modal.querySelector("#modal-score").textContent = hits + " / " + total + " aciertos";
-      modal.querySelector("#modal-message").textContent =
-        score >= 80 ? "¡Excelente!" : "Vuelve a intentarlo...";
-      modal.querySelector("#correct-img").style.display = score >= 80 ? "block" : "none";
-      modal.querySelector("#incorrect-img").style.display = score >= 80 ? "none" : "block";
-      window.jQuery(modal).modal("show");
-    }
+    if (!modal || !window.jQuery) return;
+    modal.querySelector("#modal-score").textContent = hits + " / " + total + " aciertos";
+    modal.querySelector("#modal-message").textContent = passed
+      ? "¡Excelente! Armaste la página casi sin errores."
+      : "Te recomendamos repasar los temas que fallaste y volver a intentarlo.";
+    modal.querySelector("#correct-img").style.display = passed ? "block" : "none";
+    modal.querySelector("#incorrect-img").style.display = passed ? "none" : "block";
+    window.jQuery(modal).modal("show");
   }
 
-  els.check.addEventListener("click", check);
+  els.check.addEventListener("click", function () {
+    if (state.done) {
+      reset();
+      root.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      check();
+    }
+  });
   els.next.addEventListener("click", next);
-  els.restart.addEventListener("click", reset);
   reset();
 })();

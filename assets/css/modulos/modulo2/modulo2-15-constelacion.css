@@ -1,0 +1,308 @@
+/* Módulo 2-15: entidades como una constelación.
+   Cada entidad es un punto con su símbolo; los puntos se unen con una línea.
+   Al elegir uno, una burbuja de vidrio líquido se desliza sobre él y arriba
+   aparece un globo con sus datos. Solo usa --theme-color (de app.css). */
+
+.const {
+  --c-10: color-mix(in srgb, var(--theme-color) 10%, white);
+  --c-25: color-mix(in srgb, var(--theme-color) 25%, white);
+  --c-45: color-mix(in srgb, var(--theme-color) 45%, white);
+  --star: 64px; /* tamaño de cada punto */
+  --lens: 96px; /* tamaño de la burbuja de vidrio */
+  position: relative;
+  height: 280px; /* solo el espacio de los puntos: la burbuja de datos
+                    puede salir por arriba y quedar sobre el texto */
+  z-index: 5; /* por encima del texto, para que la burbuja quede encima */
+  margin: 30px 0 24px;
+}
+
+@supports not (color: color-mix(in srgb, red, white)) {
+  .const {
+    --c-10: rgba(9, 59, 139, 0.1);
+    --c-25: rgba(9, 59, 139, 0.25);
+    --c-45: rgba(9, 59, 139, 0.45);
+  }
+}
+
+/* Área de los puntos: deja margen a los lados para que no se recorten */
+.const__sky {
+  position: absolute;
+  inset: 0 40px;
+}
+
+/* Línea que une los puntos: se dibuja al entrar en pantalla */
+.const__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.const__lines polyline {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Línea punteada que se ve */
+.const__path {
+  stroke: var(--c-45);
+  stroke-width: 3;
+  stroke-dasharray: 0.1 9;
+}
+
+/* Línea sólida invisible que funciona como máscara: al animarla, la
+   línea punteada aparece de un punto al otro como si se dibujara. */
+.const__reveal {
+  stroke: #ffffff;
+  stroke-width: 12;
+  stroke-dasharray: var(--len, 3000);
+  stroke-dashoffset: var(--len, 3000);
+  transition: stroke-dashoffset 1.6s ease;
+}
+
+.const.is-visible .const__reveal {
+  stroke-dashoffset: 0;
+}
+
+/* Puntos (estrellas) */
+.const__star {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  translate: var(--fx, 0px) var(--fy, 0px); /* flotación, la pone el JS */
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--star);
+  height: var(--star);
+  margin: calc(var(--star) / -2) 0 0 calc(var(--star) / -2);
+  padding: 0;
+  border: 2px solid var(--theme-color);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 8px var(--c-10);
+  color: var(--theme-color);
+  font: 700 26px/1 Georgia, "Times New Roman", serif;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: transform 0.3s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, opacity 0.4s ease;
+}
+
+.const.is-visible .const__star {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: calc(var(--i) * 0.12s), 0s, 0s, 0s, calc(var(--i) * 0.12s);
+}
+
+.const.is-visible .const__star:hover {
+  transform: scale(1.12);
+  transition-delay: 0s;
+}
+
+.const__star:focus {
+  outline: none;
+}
+
+.const__star:focus-visible {
+  box-shadow: 0 0 0 6px var(--c-25);
+}
+
+/* Punto elegido: se rellena; la burbuja de vidrio queda encima */
+.const.is-visible .const__star[aria-pressed="true"] {
+  z-index: 2;
+  background: var(--theme-color);
+  color: #ffffff;
+  box-shadow: 0 0 0 8px transparent;
+  transform: scale(1.08);
+  transition-delay: 0s;
+}
+
+/* Burbuja de vidrio líquido: un lente translúcido con borde brillante,
+   reflejos y sombra que se desliza de un punto a otro estirándose. */
+.const__lens {
+  --a: 0deg; /* dirección del movimiento, para estirarse hacia allá */
+  position: absolute;
+  left: var(--lx, 0);
+  top: var(--ly, 0);
+  z-index: 3;
+  width: var(--lens);
+  height: var(--lens);
+  margin: calc(var(--lens) / -2) 0 0 calc(var(--lens) / -2);
+  border-radius: 50%;
+  background:
+    radial-gradient(110% 80% at 30% 18%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.16) 34%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(70% 45% at 68% 92%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 70%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 58%, rgba(255, 255, 255, 0.35) 72%, rgba(255, 255, 255, 0) 80%);
+  -webkit-backdrop-filter: saturate(140%) brightness(1.05);
+  backdrop-filter: saturate(140%) brightness(1.05);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.95),
+    inset 0 3px 6px rgba(255, 255, 255, 0.9),
+    inset 0 -8px 14px var(--c-25),
+    inset 8px 0 12px rgba(255, 255, 255, 0.35),
+    inset -6px 0 10px var(--c-10),
+    0 0 0 1px rgba(23, 32, 51, 0.08),
+    0 12px 26px rgba(23, 32, 51, 0.18),
+    0 3px 6px rgba(23, 32, 51, 0.12);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    left 0.55s cubic-bezier(0.45, 1.45, 0.4, 1),
+    top 0.55s cubic-bezier(0.45, 1.45, 0.4, 1),
+    opacity 0.3s ease;
+}
+
+.const.is-visible .const__lens.is-ready {
+  opacity: 1;
+}
+
+/* Al moverse se estira en la dirección del viaje y rebota como líquido */
+.const__lens.is-moving {
+  animation: const-liquid 0.6s ease;
+}
+
+@keyframes const-liquid {
+  0% { transform: rotate(var(--a)) scale(1, 1) rotate(calc(-1 * var(--a))); }
+  30% { transform: rotate(var(--a)) scale(1.32, 0.8) rotate(calc(-1 * var(--a))); }
+  60% { transform: rotate(var(--a)) scale(0.9, 1.1) rotate(calc(-1 * var(--a))); }
+  80% { transform: rotate(var(--a)) scale(1.04, 0.97) rotate(calc(-1 * var(--a))); }
+  100% { transform: rotate(var(--a)) scale(1, 1) rotate(calc(-1 * var(--a))); }
+}
+
+/* Burbuja de diálogo con los datos */
+.const__bubble {
+  position: absolute;
+  z-index: 4;
+  width: 250px;
+  padding: 14px 16px;
+  border: 2px solid var(--theme-color);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(23, 32, 51, 0.12);
+  color: #263040;
+  text-align: left;
+  pointer-events: none;
+  animation: const-pop 0.25s ease;
+}
+
+.const__bubble[hidden] {
+  display: none;
+}
+
+/* La burbuja aparece después de que se dibuja la constelación */
+.const:not(.is-visible) .const__bubble {
+  visibility: hidden;
+}
+
+/* Piquito de la burbuja, apunta al punto elegido */
+.const__bubble::after {
+  content: "";
+  position: absolute;
+  left: var(--tail, 50%);
+  bottom: -10px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-right: 2px solid var(--theme-color);
+  border-bottom: 2px solid var(--theme-color);
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+@keyframes const-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+}
+
+.const__bubble-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.const__bubble-char {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--theme-color);
+  color: #ffffff;
+  font: 700 22px/1 Georgia, "Times New Roman", serif;
+}
+
+.const__bubble-title {
+  margin: 0;
+  color: var(--theme-color);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.const__bubble dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.const__bubble dt {
+  color: #6b7686;
+  font-weight: 400;
+}
+
+.const__bubble dd {
+  margin: 0;
+}
+
+.const__bubble code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--c-10);
+  color: var(--theme-color);
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+  .const {
+    --star: 46px;
+    --lens: 70px;
+    height: 260px;
+  }
+
+  .const__sky {
+    inset: 0 34px;
+  }
+
+  .const__star {
+    box-shadow: 0 0 0 5px var(--c-10);
+    font-size: 20px;
+  }
+
+  .const__bubble {
+    width: 220px;
+    padding: 12px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .const__reveal,
+  .const__star,
+  .const__lens {
+    transition: none;
+  }
+
+  .const__bubble,
+  .const__lens.is-moving {
+    animation: none;
+  }
+}

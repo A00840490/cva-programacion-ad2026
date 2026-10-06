@@ -1,16 +1,42 @@
-/* modulo3-22: propiedades flex como tarjetas 3D que se voltean.
-   Frente: nombre + mini demostración animada de la propiedad.
-   Reverso: explicación. Se voltean con hover o al enfocarlas (tocar). */
-
 .flex-props {
   --fp-container: #3f6fd8;
   --fp-container-2: #6a8ff0;
   --fp-item: #f27935;
   --fp-item-2: #f7a35c;
   --fp-ink: #172033;
-  --fp-muted: #56627a;
-  max-width: 980px;
-  margin: 1rem auto 2.5rem;
+  --fp-muted: #000000;
+  --fp-head: 54px; /* alto del encabezado */
+  --fp-row: 200px; /* alto de cada fila de tarjetas */
+  margin: 1rem 0 2.5rem;
+}
+
+.flex-props__scroll {
+  max-height: calc(var(--fp-head) + 2 * (var(--fp-row) + 2px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: 0 18px 40px rgba(31, 47, 71, 0.12);
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-color, #093b8b) #e8edf4;
+}
+
+.flex-props__scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.flex-props__scroll::-webkit-scrollbar-track {
+  background: #e8edf4;
+}
+
+.flex-props__scroll::-webkit-scrollbar-thumb {
+  border: 2px solid #e8edf4;
+  border-radius: 999px;
+  background: var(--theme-color, #093b8b);
+}
+
+.flex-props__scroll:focus-visible {
+  outline: 3px solid rgba(9, 59, 139, 0.35);
+  outline-offset: 3px;
 }
 
 .flex-props .sr-only {
@@ -31,9 +57,9 @@
 
 .flex-props__table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   table-layout: fixed;
-  box-shadow: 0 18px 40px rgba(31, 47, 71, 0.12);
 }
 
 .flex-props__table td {
@@ -42,10 +68,13 @@
   vertical-align: top;
 }
 
-/* ---------- Encabezados: bloques extruidos ---------- */
 .flex-props__head {
   --c: var(--fp-container);
-  padding: 16px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: var(--fp-head);
+  padding: 0 18px;
   border: 1px solid #ffffff;
   background: var(--c);
   color: #ffffff;
@@ -59,11 +88,10 @@
 }
 
 
-/* ---------- Tarjeta que se voltea ---------- */
 .fp-card {
   --c1: var(--fp-container);
   --c2: var(--fp-container-2);
-  height: 200px;
+  height: var(--fp-row);
   perspective: 900px;
   outline: none;
   cursor: pointer;
@@ -138,7 +166,6 @@
   line-height: 1.5;
 }
 
-/* ---------- Mini demostraciones ---------- */
 .fp-demo {
   --t: 6s;
   display: flex;
@@ -165,7 +192,6 @@
   color: #ffffff;
   font: 800 12px/1 Arial, sans-serif;
   font-style: normal;
-  box-shadow: 0 2px 0 color-mix(in srgb, var(--c1) 70%, #000);
 }
 
 /* elemento destacado en las demos de elementos flex */
@@ -312,12 +338,17 @@
 /* ---------- Responsivo ---------- */
 @media (max-width: 767px) {
   .flex-props__head {
-    padding: 10px 8px;
+    padding: 0 8px;
     font-size: 14px;
   }
 
+  .flex-props {
+    --fp-head: 44px;
+    --fp-row: 190px;
+  }
+
   .fp-card {
-    height: 190px;
+    height: var(--fp-row);
   }
 
   .fp-card__face {

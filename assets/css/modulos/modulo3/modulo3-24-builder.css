@@ -1,0 +1,84 @@
+/* Ejercicio 3 (modulo3-24): varios ejercicios de CSS uno tras otro.
+   Se apoya en los estilos del Ejercicio 2 (modulo2/modulo2-16-builder.css)
+   y solo agrega lo propio: barra segmentada y colores de CSS. */
+
+/* Barra de progreso segmentada: un tramo por ejercicio */
+.css-builder__progress {
+  display: flex;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.css-builder__seg {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: #e8edf4;
+  overflow: hidden;
+}
+
+.css-builder__seg > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--b-blue);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease 0.3s;
+}
+
+.css-builder__seg.is-done > span {
+  background: var(--b-right);
+}
+
+.css-builder .builder__ask {
+  color: var(--b-ink);
+}
+
+.css-builder__summary {
+  display: block;
+  margin-top: 4px;
+  color: var(--b-ink);
+  font-weight: 700;
+}
+
+/* Colores del código CSS */
+.css-builder__sel {
+  color: #f1ac29;
+}
+
+.css-builder__prop {
+  color: #79c0ff;
+}
+
+.css-builder__val {
+  color: #ffffff;
+}
+
+/* El código es corto: el editor no necesita tanta altura */
+.css-builder .builder__code {
+  height: 320px;
+  font-size: 15px;
+}
+
+.css-builder .builder__frame {
+  min-height: 320px;
+}
+
+.css-builder .builder__actions .builder__btn[data-next-ex] {
+  background: var(--b-right);
+}
+
+@media (max-width: 991px) {
+  .css-builder .builder__code {
+    height: 240px;
+  }
+
+  .css-builder .builder__frame {
+    min-height: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .css-builder__seg > span {
+    transition: none;
+  }
+}
